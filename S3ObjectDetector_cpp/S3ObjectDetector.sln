@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "S3ObjectDetector", "ConsoleApplication1\ConsoleApplication1.vcxproj", "{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		x64|Win32 = x64|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.Debug|Win32.Build.0 = Debug|Win32
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.Release|Win32.ActiveCfg = Release|Win32
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.Release|Win32.Build.0 = Release|Win32
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.x64|Win32.ActiveCfg = x64|Win32
+		{EB9F2DA6-649C-4CC6-8D18-A53531CA13D4}.x64|Win32.Build.0 = x64|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
