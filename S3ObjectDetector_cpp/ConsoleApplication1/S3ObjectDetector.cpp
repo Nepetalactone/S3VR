@@ -13,7 +13,7 @@ using namespace cv;
 
 
 void magic(Mat img);
-int vidStream();
+int vidStream(VideoCapture cap);
 
 //for some reason the image is only really ready after it's been passed to any method
 void magic(Mat img){
@@ -23,8 +23,6 @@ void magic(Mat img){
 int main()
 {
 
-
-	vidStream();
 
     Mat object = imread("rasp1.jpg",CV_LOAD_IMAGE_GRAYSCALE);
     if( !object.data )
@@ -50,7 +48,7 @@ int main()
 	BFMatcher matcher(NORM_L1);
 
     VideoCapture cap("rtsp://10.0.0.9:1235/");
-
+	//vidStream(cap);
     namedWindow("Good Matches");
 
     std::vector<Point2f> obj_corners(4);
@@ -63,11 +61,11 @@ int main()
 
     char key = 'a';
     int framecount = 0;
-    while (key != 27)
+	bool not_found = true;
+    while (not_found)
     {
         Mat frame;
         cap >> frame;
-
         if (framecount < 5)
         {
             framecount++;
@@ -86,6 +84,7 @@ int main()
 
         cvtColor(frame, image, CV_RGB2GRAY);
 		magic(image);
+
         detector.detect( image, kp_image );
         extractor.compute( image, kp_image, des_image );
 
@@ -120,6 +119,7 @@ int main()
             line( img_matches, scene_corners[1] + Point2f( object.cols, 0), scene_corners[2] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
             line( img_matches, scene_corners[2] + Point2f( object.cols, 0), scene_corners[3] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
             line( img_matches, scene_corners[3] + Point2f( object.cols, 0), scene_corners[0] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
+			not_found = false;
         }
 
         //Show detected matches
@@ -127,20 +127,20 @@ int main()
 
         key = waitKey(1);
     }
+	vidStream(cap);
     return 0;
 }
 
 
 
-int vidStream() {
-    cv::VideoCapture vcap;
+int vidStream(VideoCapture vcap) {
     cv::Mat image;
 
     const std::string videoStreamAddress = "rtsp://10.0.0.9:1235/"; 
-    if(!vcap.open(videoStreamAddress)) {
+   /* if(!vcap.open(videoStreamAddress)) {
         std::cout << "Error opening video stream or file" << std::endl;
         return -1;
-    }
+    }*/
 
     cv::namedWindow("Output Window");
 
@@ -152,4 +152,5 @@ int vidStream() {
         cv::imshow("Output Window", image);
         if(cv::waitKey(1) >= 0) break;
     }   
+	return 0;
 }

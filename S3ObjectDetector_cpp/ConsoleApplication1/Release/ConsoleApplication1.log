@@ -1,4 +1,4 @@
-﻿Build started 10.06.2014 12:08:04.
+﻿Build started 10.06.2014 12:35:15.
      1>Project "C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\Programs\Visual Studio 2012\VC\bin\CL.exe /c /ID:\Programs\OpenCV\opencv\build\include\opencv /ID:\Programs\OpenCV\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\S3ObjectDetector.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt S3ObjectDetector.cpp
@@ -13,11 +13,10 @@
          Release\S3ObjectDetector.obj
          Release\stdafx.obj
          Generating code
-     1>c:\users\green\documents\visual studio 2012\projects\s3objectdetector_cpp\consoleapplication1\s3objectdetector.cpp(162): warning C4715: 'vidStream' : not all control paths return a value
          Finished generating code
          ConsoleApplication1.vcxproj -> C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\Release\S3ObjectDetector.exe
      1>Done Building Project "C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\ConsoleApplication1\ConsoleApplication1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.68
+Time Elapsed 00:00:01.65
