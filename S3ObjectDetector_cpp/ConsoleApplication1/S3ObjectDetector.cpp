@@ -13,6 +13,7 @@ using namespace cv;
 
 
 void magic(Mat img);
+int vidStream();
 
 //for some reason the image is only really ready after it's been passed to any method
 void magic(Mat img){
@@ -21,6 +22,10 @@ void magic(Mat img){
 
 int main()
 {
+
+
+	vidStream();
+
     Mat object = imread("rasp1.jpg",CV_LOAD_IMAGE_GRAYSCALE);
     if( !object.data )
     {
@@ -44,7 +49,7 @@ int main()
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
 
-    VideoCapture cap("rtsp://10.0.0.3:1235/?dummy=empty");
+    VideoCapture cap("rtsp://10.0.0.9:1235/");
 
     namedWindow("Good Matches");
 
@@ -123,4 +128,36 @@ int main()
         key = waitKey(1);
     }
     return 0;
+}
+
+
+
+int vidStream() {
+    cv::VideoCapture vcap;
+    cv::Mat image;
+
+    const std::string videoStreamAddress = "rtsp://10.0.0.9:1235/"; 
+    /* it may be an address of an mjpeg stream, 
+    e.g. "http://user:pass@cam_address:8081/cgi/mjpg/mjpg.cgi?.mjpg" */
+
+    //open the video stream and make sure it's opened
+    if(!vcap.open(videoStreamAddress)) {
+        std::cout << "Error opening video stream or file" << std::endl;
+        return -1;
+    }
+
+    //Create output window for displaying frames. 
+    //It's important to create this window outside of the `for` loop
+    //Otherwise this window will be created automatically each time you call
+    //`imshow(...)`, which is very inefficient. 
+    cv::namedWindow("Output Window");
+
+    for(;;) {
+        if(!vcap.read(image)) {
+            std::cout << "No frame" << std::endl;
+            cv::waitKey();
+        }
+        cv::imshow("Output Window", image);
+        if(cv::waitKey(1) >= 0) break;
+    }   
 }
