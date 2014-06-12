@@ -1,13 +1,13 @@
-﻿Build started 10.06.2014 12:35:15.
+﻿Build started 12.06.2014 09:53:02.
      1>Project "C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\ConsoleApplication1\ConsoleApplication1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\Programs\Visual Studio 2012\VC\bin\CL.exe /c /ID:\Programs\OpenCV\opencv\build\include\opencv /ID:\Programs\OpenCV\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\S3ObjectDetector.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt S3ObjectDetector.cpp
          S3ObjectDetector.cpp
-     1>S3ObjectDetector.cpp(106): warning C4018: '<' : signed/unsigned mismatch
-     1>S3ObjectDetector.cpp(118): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>S3ObjectDetector.cpp(119): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>S3ObjectDetector.cpp(120): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>S3ObjectDetector.cpp(121): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>S3ObjectDetector.cpp(115): warning C4018: '<' : signed/unsigned mismatch
+     1>S3ObjectDetector.cpp(127): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>S3ObjectDetector.cpp(128): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>S3ObjectDetector.cpp(129): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>S3ObjectDetector.cpp(130): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
        Link:
          D:\Programs\Visual Studio 2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\Release\S3ObjectDetector.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:D:\Programs\OpenCV\opencv\build\x86\vc12\lib opencv_core249.lib opencv_imgproc249.lib opencv_highgui249.lib opencv_ml249.lib opencv_video249.lib opencv_features2d249.lib opencv_calib3d249.lib opencv_objdetect249.lib opencv_contrib249.lib opencv_legacy249.lib opencv_flann249.lib opencv_nonfree249.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\Release\S3ObjectDetector.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\green\Documents\Visual Studio 2012\Projects\S3ObjectDetector_cpp\Release\S3ObjectDetector.lib" /MACHINE:X86 /SAFESEH Release\S3ObjectDetector.res
          Release\S3ObjectDetector.obj

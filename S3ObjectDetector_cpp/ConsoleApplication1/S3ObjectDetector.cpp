@@ -12,6 +12,13 @@
 using namespace cv;
 
 
+
+const int FRAME_SKIP = 5;
+const int MIN_KEYPOINTS_FOUND = 1;
+const int MIN_HESS = 1000;
+
+
+
 void magic(Mat img);
 int vidStream(VideoCapture cap);
 
@@ -31,9 +38,7 @@ int main()
     }
 
     //Detect the keypoints using SURF Detector
-    int minHessian = 500;
-
-    SurfFeatureDetector detector( minHessian );
+    SurfFeatureDetector detector( MIN_HESS );
     std::vector<KeyPoint> kp_object;
 
     detector.detect( object, kp_object );
@@ -47,7 +52,7 @@ int main()
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
 
-    VideoCapture cap("rtsp://10.0.0.9:1235/");
+    VideoCapture cap("rtsp://10.0.0.3:1234/");
 	//vidStream(cap);
     namedWindow("Good Matches");
 
@@ -66,11 +71,12 @@ int main()
     {
         Mat frame;
         cap >> frame;
-        if (framecount < 5)
+        if (framecount < FRAME_SKIP)
         {
             framecount++;
             continue;
         }
+		framecount = 0;
 
         Mat des_image, img_matches;
         std::vector<KeyPoint> kp_image;
@@ -83,9 +89,12 @@ int main()
         Mat image;
 
         cvtColor(frame, image, CV_RGB2GRAY);
-		magic(image);
+		waitKey(1);//magic(image);
 
         detector.detect( image, kp_image );
+		if(kp_image.size() < MIN_KEYPOINTS_FOUND){
+			continue;
+		}
         extractor.compute( image, kp_image, des_image );
 
         matcher.knnMatch(des_object, des_image, matches, 2);
@@ -136,8 +145,8 @@ int main()
 int vidStream(VideoCapture vcap) {
     cv::Mat image;
 
-    const std::string videoStreamAddress = "rtsp://10.0.0.9:1235/"; 
-   /* if(!vcap.open(videoStreamAddress)) {
+    /*const std::string videoStreamAddress = "rtsp://10.0.0.9:1234/"; 
+    if(!vcap.open(videoStreamAddress)) {
         std::cout << "Error opening video stream or file" << std::endl;
         return -1;
     }*/
