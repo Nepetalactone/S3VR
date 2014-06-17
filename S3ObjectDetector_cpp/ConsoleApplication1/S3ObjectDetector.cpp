@@ -13,14 +13,15 @@ using namespace cv;
 
 
 
-const int FRAME_SKIP = 5;
+const int FRAME_SKIP = 50;
 const int MIN_KEYPOINTS_FOUND = 1;
-const int MIN_HESS = 1000;
+const int MIN_HESS = 500;
 
 
 
 void magic(Mat img);
 int vidStream(VideoCapture cap);
+Mat makeCanvas(std::vector<cv::Mat>& vecMat, int windowHeight, int nRows);
 
 //for some reason the image is only really ready after it's been passed to any method
 void magic(Mat img){
@@ -30,8 +31,7 @@ void magic(Mat img){
 int main()
 {
 
-
-    Mat object = imread("rasp1.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+    Mat object = imread("rasp3.jpg",CV_LOAD_IMAGE_GRAYSCALE);
     if( !object.data )
     {
         return -1;
@@ -52,7 +52,7 @@ int main()
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
 
-    VideoCapture cap("rtsp://10.0.0.3:1234/");
+    VideoCapture cap("rtsp://10.0.0.6:1234/");
 	//vidStream(cap);
     namedWindow("Good Matches");
 
@@ -71,6 +71,15 @@ int main()
     {
         Mat frame;
         cap >> frame;
+		
+		waitKey(1);
+		vector<Mat> images;
+		Mat text(320,240, CV_8UC3, Scalar(255,255,255));
+		images.push_back(frame);
+		images.push_back(text);
+		Mat canvas = makeCanvas(images,250,1);
+        cv::imshow("Output Window", canvas);
+
         if (framecount < FRAME_SKIP)
         {
             framecount++;
@@ -136,7 +145,7 @@ int main()
 
         //Show detected matches
         imshow( "Good Matches", img_matches );
-
+		
         key = waitKey(1);
     }
 	vidStream(cap);
@@ -148,7 +157,7 @@ int main()
 int vidStream(VideoCapture vcap) {
     cv::Mat image;
 
-    /*const std::string videoStreamAddress = "rtsp://10.0.0.9:1234/"; 
+    /*const std::string videoStreamAddress = "rtsp://10.0.0.x:1234/"; 
     if(!vcap.open(videoStreamAddress)) {
         std::cout << "Error opening video stream or file" << std::endl;
         return -1;
@@ -161,8 +170,56 @@ int vidStream(VideoCapture vcap) {
             std::cout << "No frame" << std::endl;
             cv::waitKey();
         }
-        cv::imshow("Output Window", image);
+		vector<Mat> images;
+		Mat text(320,240, CV_8UC3, Scalar(255,255,255));
+		putText(text,"Raspberry Pi",Point(10,20),FONT_HERSHEY_PLAIN,1,false);
+		putText(text,"HDMI, 2x USB, Ethernet",Point(10,40),FONT_HERSHEY_PLAIN,1,false);
+		putText(text,"Analog Audio Video Ports",Point(10,60),FONT_HERSHEY_PLAIN,1,false);
+		images.push_back(image);
+		images.push_back(text);
+		Mat canvas = makeCanvas(images,250,1);
+        cv::imshow("Output Window", canvas);
         if(cv::waitKey(1) >= 0) break;
-    }   
+    }
 	return 0;
 }
+
+
+Mat makeCanvas(std::vector<cv::Mat>& vecMat, int windowHeight, int nRows) {
+            int N = vecMat.size();
+            nRows  = nRows > N ? N : nRows; 
+            int edgeThickness = 10;
+            int imagesPerRow = ceil(double(N) / nRows);
+            int resizeHeight = floor(2.0 * ((floor(double(windowHeight - edgeThickness) / nRows)) / 2.0)) - edgeThickness;
+            int maxRowLength = 0;
+
+            std::vector<int> resizeWidth;
+            for (int i = 0; i < N;) {
+                    int thisRowLen = 0;
+                    for (int k = 0; k < imagesPerRow; k++) {
+                            double aspectRatio = double(vecMat[i].cols) / vecMat[i].rows;
+                            int temp = int( ceil(resizeHeight * aspectRatio));
+                            resizeWidth.push_back(temp);
+                            thisRowLen += temp;
+                            if (++i == N) break;
+                    }
+                    if ((thisRowLen + edgeThickness * (imagesPerRow + 1)) > maxRowLength) {
+                            maxRowLength = thisRowLen + edgeThickness * (imagesPerRow + 1);
+                    }
+            }
+            int windowWidth = maxRowLength;
+            cv::Mat canvasImage(windowHeight, windowWidth, CV_8UC3, Scalar(0, 0, 0));
+
+            for (int k = 0, i = 0; i < nRows; i++) {
+                    int y = i * resizeHeight + (i + 1) * edgeThickness;
+                    int x_end = edgeThickness;
+                    for (int j = 0; j < imagesPerRow && k < N; k++, j++) {
+                            int x = x_end;
+                            cv::Rect roi(x, y, resizeWidth[k], resizeHeight);
+                            cv::Mat target_ROI = canvasImage(roi);
+                            cv::resize(vecMat[k], target_ROI, target_ROI.size());
+                            x_end += resizeWidth[k] + edgeThickness;
+                    }
+            }
+            return canvasImage;
+    }
