@@ -28,7 +28,7 @@ void magic(Mat img){
 	return;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 
     Mat object = imread("rasp3.jpg",CV_LOAD_IMAGE_GRAYSCALE);
@@ -52,7 +52,9 @@ int main()
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
 
-    VideoCapture cap("rtsp://10.0.0.8:1234/");
+	String ip = argv[1];
+
+    VideoCapture cap("rtsp://" + ip + ":1234/");
 	//vidStream(cap);
     namedWindow("Good Matches");
 
