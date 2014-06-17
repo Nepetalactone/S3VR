@@ -52,7 +52,7 @@ int main()
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
 
-    VideoCapture cap("rtsp://10.0.0.6:1234/");
+    VideoCapture cap("rtsp://10.0.0.8:1234/");
 	//vidStream(cap);
     namedWindow("Good Matches");
 
