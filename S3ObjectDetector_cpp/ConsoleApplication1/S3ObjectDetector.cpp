@@ -30,7 +30,6 @@ void magic(Mat img){
 
 int main(int argc, char* argv[])
 {
-
     Mat object = imread("rasp3.jpg",CV_LOAD_IMAGE_GRAYSCALE);
     if( !object.data )
     {
@@ -51,10 +50,10 @@ int main(int argc, char* argv[])
 
     //FlannBasedMatcher matcher;
 	BFMatcher matcher(NORM_L1);
-
-	String ip = argv[1];
-
-    VideoCapture cap("rtsp://" + ip + ":1234/");
+	
+	std::string ip = "";
+	ip.append(argv[1]);
+    VideoCapture cap("rtsp://" + ip +":1234/");
 	//vidStream(cap);
     namedWindow("Good Matches");
 
@@ -134,14 +133,11 @@ int main(int argc, char* argv[])
 
             perspectiveTransform( obj_corners, scene_corners, H);
 
-			cv::Point point = cv::Point(0, 0);
-
             //Draw lines between the corners (the mapped object in the scene image )
             line( img_matches, scene_corners[0] + Point2f( object.cols, 0), scene_corners[1] + Point2f( object.cols, 0), Scalar(0, 255, 0), 4 );
             line( img_matches, scene_corners[1] + Point2f( object.cols, 0), scene_corners[2] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
             line( img_matches, scene_corners[2] + Point2f( object.cols, 0), scene_corners[3] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
             line( img_matches, scene_corners[3] + Point2f( object.cols, 0), scene_corners[0] + Point2f( object.cols, 0), Scalar( 0, 255, 0), 4 );
-			putText(img_matches, "Beispieltext", Point(0,0), FONT_HERSHEY_PLAIN, 1, 1);
 			not_found = false;
         }
 
